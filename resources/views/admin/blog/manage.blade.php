@@ -23,7 +23,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Manage Category</h4>
+                    <h4 class="card-title">Manage Blog</h4>
                     <p class="text-center text-success">{{ Session::get('message') }}</p>
 
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -31,27 +31,31 @@
                         <tr>
                             <th>#</th>
                             <th width="5%">Image</th>
+                            <th>Main Title</th>
+                            <th>Sub Title</th>
+                            <th>Author Name</th>
                             <th>Category Name</th>
-                            <th>Description</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($categories as $category)
+                        @foreach($blogs as $blog)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
-                                <td><img src="{{ asset($category->image) }}" alt="" width="100%"></td>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->description }}</td>
-                                    <td class="badge rounded-pill {{ $category->status == 1 ? 'bg-success' : 'bg-danger' }} text-white m-2">
-                                        {{ $category->status == 1 ? 'Published' : 'Unpublished' }}
-                                    </td>
+                                <td><img src="{{ asset($blog->image) }}" alt="" width="100%"></td>
+                                <td>{{ $blog->main_title }}</td>
+                                <td>{{ $blog->sub_title }}</td>
+                                <td>{{ \App\Models\User::find($blog->author_id)->name }}</td>
+                                <td>{{ $blog->category->name }}</td>
+                                <td class="badge rounded-pill {{ $blog->status == 1 ? 'bg-success' : 'bg-danger' }} text-white m-2">
+                                    {{ $blog->status == 1 ? 'Published' : 'Unpublished' }}
+                                </td>
                                 <td>
-                                    <a href="{{ route('category.edit', ['id'=> $category->id]) }}" class="btn btn-success btn-sm">
+                                    <a href="{{ route('blog.edit', ['id'=> $blog->id]) }}" class="btn btn-success btn-sm">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('category.delete', ['id'=> $category->id]) }}" class="btn btn-danger btn-sm">
+                                    <a href="{{ route('blog.delete', ['id'=> $blog->id]) }}" class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -65,5 +69,6 @@
         </div> <!-- end col -->
     </div> <!-- end row -->
 @endsection
+
 
 
